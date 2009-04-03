@@ -1,11 +1,19 @@
+
+// Lambda
 #include "lambda-commented.h"
+
+// Required
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <functional>
 
+// Timing
 #include <time.h>
 #include <sys/time.h>
+
+// Boost Lambda
+#include <boost/lambda/lambda.hpp>
 
 using namespace std;
 
@@ -57,6 +65,15 @@ int main(void) {
 	gettimeofday(&tv_initial, &tz);
 	for(i = 0; i < 1000000; i++) {
 		transform(v.begin(), v.end(), v.begin(), bind2nd(std::plus<int>(), 1));
+	}
+	gettimeofday(&tv_finish, &tz);
+	//for_each(v.begin(), v.end(), cout << _1 << "\n");
+	printf("%d,", ((int)(tv_finish.tv_sec - tv_initial.tv_sec) * 1000000) + (int)(tv_finish.tv_usec - tv_initial.tv_usec));
+	
+	//printf("=== boost::lambda ===\n");
+	gettimeofday(&tv_initial, &tz);
+	for(i = 0; i < 1000000; i++) {
+		transform(v.begin(), v.end(), v.begin(), boost::lambda::_1 + 1);
 	}
 	gettimeofday(&tv_finish, &tz);
 	//for_each(v.begin(), v.end(), cout << _1 << "\n");
