@@ -14,23 +14,24 @@ means = collection.inject([0] * NUM) { |a, b|
 	v  / collection.size
 }
 
-stdevs = collection.inject([0] * NUM) { |a, b|
+confIntervals = collection.inject([0] * NUM) { |a, b|
 	a.each_index { |i|
 		a[i] += (b[i].to_i - means[i])
 	}
 }.map { |v| 
-	Math.sqrt(v**2 / (collection.size - 1))
+	stdev = Math.sqrt(v**2 / (collection.size - 1.0))
+	(1.96 * stdev) / Math.sqrt(collection.size)
 }
 
 # Lambda Mean, Lambda Conf., Functor Mean, Functor Conf., Bind Mean, Bind Conf., Boost Mean, Boost Conf.
-printf "%d,%f,%d,%f,%d,%f,%d,%f\n",
+printf "%d %f %d %f %d %f %d %f\n",
 	means[0],
-	stdevs[0],
+	confIntervals[0],
 	means[1],
-	stdevs[1],
+	confIntervals[1],
 	means[2],
-	stdevs[2],
+	confIntervals[2],
 	means[3],
-	stdevs[3],
+	confIntervals[3],
 	means[4],
-	stdevs[4]
+	confIntervals[4]
