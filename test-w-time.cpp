@@ -47,8 +47,7 @@ int main(void) {
 
 	//printf("=== Mult10 class with Functor ===\n");
 	gettimeofday(&tv_initial, &tz);
-	Mult10 f;
-	transform(v.begin(), v.end(), v.begin(), f);
+	transform(v.begin(), v.end(), v.begin(), Mult10());
 	gettimeofday(&tv_finish, &tz);
 	printf("%d,", ((int)(tv_finish.tv_sec - tv_initial.tv_sec) * 1000000) + (int)(tv_finish.tv_usec - tv_initial.tv_usec));
 
